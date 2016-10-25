@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Form">
+  <grid id="27dc6" binding="Panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-12501183"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="bb65b" class="javax.swing.JLabel" binding="Label1">
+        <constraints border-constraint="First"/>
+        <properties>
+          <background color="-12500671"/>
+          <foreground color="-1"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <scrollpane id="1eae1">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ff79f" class="javax.swing.JTable" binding="table1" default-binding="true">
+            <constraints/>
+            <properties>
+              <autoCreateRowSorter value="false"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

@@ -1,6 +1,8 @@
 import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.text.TableView;
 import java.awt.event.ActionEvent;
-import java.io.Serializable;
 
 public class Form extends JFrame {
 
@@ -8,27 +10,38 @@ public class Form extends JFrame {
     private JPanel Panel;
     private JTable table1;
     private JLabel CountLBL;
+    private JScrollPane ScrollPane;
     private personModel model;
-
 
 
     public Form(String s){
         super(s);
         setDefaultCloseOperation(Form.EXIT_ON_CLOSE);
-        setSize(400,400);
+        setSize(500,400);
         setLocationRelativeTo(null);
         setContentPane(Panel);
         //Label1.setText("Name");
         Label1.setText(person.getEventName());
-        CountLBL.setText("Собрано:");
 
         model = new personModel();
         table1.setModel(model);
+        table1.setFillsViewportHeight(true);
 
+        TableColumn drinkColumn = table1.getColumnModel().getColumn(2);
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("Beer");
+        comboBox.addItem("Vodka");
+        comboBox.addItem("Whiskey");
+        comboBox.addItem("None");
+        drinkColumn.setCellEditor(new DefaultCellEditor(comboBox));
+
+        TableColumn anotColumn = table1.getColumnModel().getColumn(3);
+        anotColumn.setPreferredWidth(150);
         JMenuBar menu = new JMenuBar();
         menu.add(createFileMenu());
         menu.add(createAddMenu());
         setJMenuBar(menu);
+        summary();
     }
 
 
@@ -50,7 +63,7 @@ public class Form extends JFrame {
         return option;
     }
 
-    class addAction extends AbstractAction {
+    private class addAction extends AbstractAction {
         addAction() {
             putValue(NAME, "Добавить участника");
         }
@@ -60,22 +73,24 @@ public class Form extends JFrame {
             person.setName(JOptionPane.showInputDialog("Введи имя"));
             person.setCash(JOptionPane.showInputDialog("Сумма вклада"));
             Main.persons.add(person);
+            summary();
             table1.updateUI();
         }
     } //для удаления Main.person.remove(tabel get selected row) и tabel update UI
 
-    class removeAction extends AbstractAction {
+    private class removeAction extends AbstractAction {
         removeAction() {putValue(NAME,"Удалить участника");}
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (table1.getSelectedRow() == -1 || Main.persons.size() < 0) {return;}
             Main.persons.remove(table1.getSelectedRow());
+            summary();
             table1.updateUI();
         }
     }
 
-    class createAction extends AbstractAction {
+    private class createAction extends AbstractAction {
         createAction() {putValue(NAME,"Новое событие");}
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -84,11 +99,19 @@ public class Form extends JFrame {
         }
     }
 
-    class exitAction extends  AbstractAction {
+    private class exitAction extends  AbstractAction {
         exitAction() {putValue(NAME,"Выход");}
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
+    }
+
+    private void  summary () {
+        int Totalcount = 0;
+        for (int i = 0; i < table1.getRowCount(); i++) {
+            Totalcount += Integer.parseInt((String) table1.getValueAt(i, 1));
+        }
+        CountLBL.setText("Собрано:" + Totalcount + " руб");
     }
 }

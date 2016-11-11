@@ -6,9 +6,11 @@ import java.util.ArrayList;
 public class Main {
 
     public static ArrayList<person> persons = new ArrayList<>();
+    public static String eventName;
 
     public static void main(String[] args) {
         persons = (ArrayList<person>) deserData("persons");
+        eventName = (String) deserData("EventName");
         Form f = new Form("Form");
         f.addWindowListener(new WindowListener() {
             @Override
@@ -16,6 +18,7 @@ public class Main {
             @Override
             public void windowClosing(WindowEvent e) {
                 serData("persons",persons);
+                serData("EventName",eventName);
             }
 
             @Override
@@ -39,7 +42,7 @@ public class Main {
     private static Object deserData(String file_name) {
         Object retObj = null;
         try {
-            FileInputStream fileIn = new FileInputStream(file_name + ".ser");  //считывает файл в массив байт
+            FileInputStream fileIn = new FileInputStream(file_name + ".mdk");  //считывает файл в массив байт
             ObjectInputStream in = new ObjectInputStream(fileIn);  //преобразует массив байт в объект
             retObj = in.readObject();
             fileIn.close();
@@ -59,7 +62,7 @@ public class Main {
 
     public static void serData(String file_name, Object obj) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(file_name + ".ser");
+            FileOutputStream fileOut = new FileOutputStream(file_name + ".mdk");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(obj);
             fileOut.close();

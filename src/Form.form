@@ -14,6 +14,7 @@
         <properties>
           <background color="-12500671"/>
           <foreground color="-1"/>
+          <labelFor value="1eae1"/>
           <text value="Label"/>
         </properties>
       </component>
@@ -30,6 +31,14 @@
           </component>
         </children>
       </scrollpane>
+      <component id="66c05" class="javax.swing.JLabel" binding="CountLBL">
+        <constraints border-constraint="South"/>
+        <properties>
+          <background color="-10131866"/>
+          <foreground color="-1"/>
+          <text value="Label"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

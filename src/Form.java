@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 
 public class Form extends JFrame {
 
     private JLabel Label1;
     private JPanel Panel;
     private JTable table1;
+    private JLabel CountLBL;
     private personModel model;
+
 
 
     public Form(String s){
@@ -15,7 +18,9 @@ public class Form extends JFrame {
         setSize(400,400);
         setLocationRelativeTo(null);
         setContentPane(Panel);
-        Label1.setText("Название события");
+        //Label1.setText("Name");
+        Label1.setText(person.getEventName());
+        CountLBL.setText("Собрано:");
 
         model = new personModel();
         table1.setModel(model);
@@ -74,7 +79,8 @@ public class Form extends JFrame {
         createAction() {putValue(NAME,"Новое событие");}
         @Override
         public void actionPerformed(ActionEvent e) {
-            Label1.setText(JOptionPane.showInputDialog("Введи название"));
+            person.setEventName(JOptionPane.showInputDialog("Введи название"));
+            Label1.setText(person.getEventName());
         }
     }
 
@@ -85,6 +91,4 @@ public class Form extends JFrame {
             System.exit(0);
         }
     }
-
-
 }

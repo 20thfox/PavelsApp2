@@ -13,12 +13,12 @@ public class personModel implements TableModel {
     @Override
     public int getRowCount() {
         return Main.persons.size();
-    }
+    } //количество строк, которое берется из длинны коллекции
 
     @Override
     public int getColumnCount() {
-        return 2;
-    }
+        return 4;
+    }   //количество столбцов
 
     @Override
     public String getColumnName(int columnIndex) {
@@ -29,6 +29,12 @@ public class personModel implements TableModel {
                 break;
             case 1:
                 return_string = "Вклад";
+                break;
+            case 2:
+                return_string = "Напиток";
+                break;
+            case 3:
+                return_string = "Примечание";
                 break;
         }
         return return_string;
@@ -54,6 +60,12 @@ public class personModel implements TableModel {
             case 1 :
                 return_Object = Main.persons.get(rowIndex).getCash();
                 break;
+            case 2:
+                return_Object = Main.persons.get(rowIndex).getDrink();
+                break;
+            case 3:
+                return_Object = Main.persons.get(rowIndex).getAnotation();
+                break;
         }
         return return_Object;
     }
@@ -63,8 +75,16 @@ public class personModel implements TableModel {
         switch (columnIndex) {
             case 0 :
                 Main.persons.get(rowIndex).setName((String) aValue);
+                break;
             case 1 :
                 Main.persons.get(rowIndex).setCash((String) aValue);
+                break;
+            case 2 :
+                Main.persons.get(rowIndex).setDrink((String) aValue);
+                break;
+            case 3 :
+                Main.persons.get(rowIndex).setAnotation((String) aValue);
+                break;
         }
     }
 

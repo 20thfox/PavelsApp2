@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import javax.swing.text.TableView;
 import java.awt.event.ActionEvent;
 
 public class Form extends JFrame {
@@ -32,6 +30,9 @@ public class Form extends JFrame {
         comboBox.addItem("Beer");
         comboBox.addItem("Vodka");
         comboBox.addItem("Whiskey");
+        comboBox.addItem("Rum");
+        comboBox.addItem("Шампанское");
+        comboBox.addItem("Tequila");
         comboBox.addItem("None");
         drinkColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
@@ -40,6 +41,7 @@ public class Form extends JFrame {
         JMenuBar menu = new JMenuBar();
         menu.add(createFileMenu());
         menu.add(createAddMenu());
+        menu.add(refreshMenu());
         setJMenuBar(menu);
         summary();
     }
@@ -62,6 +64,15 @@ public class Form extends JFrame {
         option.add(remove_body);
         return option;
     }
+
+    private JMenuItem refreshMenu () {
+        JMenuItem refresh = new JMenuItem(new refreshAction ());
+        return refresh;
+    }
+
+
+
+
 
     private class addAction extends AbstractAction {
         addAction() {
@@ -104,6 +115,16 @@ public class Form extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
+        }
+    }
+
+    private class refreshAction extends AbstractAction {
+        refreshAction () {putValue(NAME,"Обновить");}
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            summary();
         }
     }
 

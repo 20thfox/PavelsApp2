@@ -86,6 +86,7 @@ public class personModel implements TableModel {
                 Main.persons.get(rowIndex).setAnotation((String) aValue);
                 break;
         }
+
     }
 
 

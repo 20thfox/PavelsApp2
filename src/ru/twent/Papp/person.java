@@ -1,9 +1,11 @@
+package ru.twent.Papp;
+
 import java.io.Serializable;
 
 public class person implements Serializable {
 
     private String name;
-    private String cash;
+    private int cash;
     private String drink;
     private String anotation;
 
@@ -26,11 +28,11 @@ public class person implements Serializable {
 
     public void setAnotation(String anotation) {this.anotation = anotation;}
 
-    public String getCash() {
+    public int getCash() {
         return cash;
     }
 
-    public void setCash(String cash) {
+    public void setCash(int cash) {
         this.cash = cash;
     }
 

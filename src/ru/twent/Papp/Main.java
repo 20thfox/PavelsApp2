@@ -1,3 +1,6 @@
+package ru.twent.Papp;
+
+import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
@@ -48,6 +51,9 @@ public class Main {
             fileIn.close();
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
+            JOptionPane.showMessageDialog(null,"Файлы списков не найдены, мы создали их для вас");
+            serData("persons",persons);
+            serData("EventName",eventName);
             System.exit(1);
         } catch (IOException e) {
             e.printStackTrace();

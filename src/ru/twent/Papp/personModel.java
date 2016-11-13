@@ -1,3 +1,6 @@
+package ru.twent.Papp;
+
+import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
@@ -77,7 +80,9 @@ public class personModel implements TableModel {
                 Main.persons.get(rowIndex).setName((String) aValue);
                 break;
             case 1 :
-                Main.persons.get(rowIndex).setCash((String) aValue);
+                try{
+                Main.persons.get(rowIndex).setCash(Integer.parseInt((String) aValue) );} catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,"Вы ввели не число");}
                 break;
             case 2 :
                 Main.persons.get(rowIndex).setDrink((String) aValue);

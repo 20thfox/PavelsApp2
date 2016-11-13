@@ -1,3 +1,5 @@
+package ru.twent.Papp;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,9 @@ public class Form extends JFrame {
     private JTable table1;
     private JLabel CountLBL;
     private JScrollPane ScrollPane;
+    private JButton btnadd;
+    private JButton btndel;
+    private JButton btnrefresh;
     private personModel model;
 
 
@@ -19,29 +24,41 @@ public class Form extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(Panel);
         //Label1.setText("Name");
+
         Label1.setText(person.getEventName());
+        if (Main.eventName == null){
+            person.setEventName(JOptionPane.showInputDialog("Введи название события"));
+            Label1.setText(person.getEventName());
+        }
 
         model = new personModel();
         table1.setModel(model);
         table1.setFillsViewportHeight(true);
 
+        btnadd.setText("Удалить");
+        btndel.setText("Добавить");
+        btnrefresh.setText("Обновить");
+        btnadd.addActionListener(new removeAction());
+        btndel.addActionListener(new addAction());
+        btnrefresh.addActionListener(new refreshAction());
+
         TableColumn drinkColumn = table1.getColumnModel().getColumn(2);
         JComboBox comboBox = new JComboBox();
-        comboBox.addItem("Beer");
-        comboBox.addItem("Vodka");
-        comboBox.addItem("Whiskey");
-        comboBox.addItem("Rum");
+        comboBox.addItem("Пиво");
+        comboBox.addItem("Водка");
+        comboBox.addItem("Виски");
+        comboBox.addItem("Ром");
         comboBox.addItem("Шампанское");
-        comboBox.addItem("Tequila");
+        comboBox.addItem("Текила");
         comboBox.addItem("None");
         drinkColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
         TableColumn anotColumn = table1.getColumnModel().getColumn(3);
         anotColumn.setPreferredWidth(150);
+
         JMenuBar menu = new JMenuBar();
         menu.add(createFileMenu());
         menu.add(createAddMenu());
-        menu.add(refreshMenu());
         setJMenuBar(menu);
         summary();
     }
@@ -65,24 +82,23 @@ public class Form extends JFrame {
         return option;
     }
 
-    private JMenuItem refreshMenu () {
-        JMenuItem refresh = new JMenuItem(new refreshAction ());
-        return refresh;
-    }
-
 
 
 
 
     private class addAction extends AbstractAction {
         addAction() {
-            putValue(NAME, "Добавить участника");
+            putValue(NAME, "Добавить");
         }
         @Override
         public void actionPerformed(ActionEvent e) {
             person person = new person();
             person.setName(JOptionPane.showInputDialog("Введи имя"));
-            person.setCash(JOptionPane.showInputDialog("Сумма вклада"));
+            try {
+                person.setCash(Integer.parseInt(JOptionPane.showInputDialog("Сумма вклада")));
+            }catch (Exception r){
+                JOptionPane.showMessageDialog(null,"Вы ввели не число");
+            }
             Main.persons.add(person);
             summary();
             table1.updateUI();
@@ -107,6 +123,9 @@ public class Form extends JFrame {
         public void actionPerformed(ActionEvent e) {
             person.setEventName(JOptionPane.showInputDialog("Введи название"));
             Label1.setText(person.getEventName());
+            Main.persons.clear();
+            table1.updateUI();
+            CountLBL.setText("Собрано:" + 0 + " руб");
         }
     }
 
@@ -114,6 +133,8 @@ public class Form extends JFrame {
         exitAction() {putValue(NAME,"Выход");}
         @Override
         public void actionPerformed(ActionEvent e) {
+            Main.serData("persons",Main.persons);
+            Main.serData("EventName",Main.eventName);
             System.exit(0);
         }
     }
@@ -131,7 +152,7 @@ public class Form extends JFrame {
     private void  summary () {
         int Totalcount = 0;
         for (int i = 0; i < table1.getRowCount(); i++) {
-            Totalcount += Integer.parseInt((String) table1.getValueAt(i, 1));
+            Totalcount += ((int)table1.getValueAt(i, 1));
         }
         CountLBL.setText("Собрано:" + Totalcount + " руб");
     }
